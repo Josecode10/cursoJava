@@ -51,7 +51,7 @@ public class Order {
     public void showProducts() {
         for(var i=0; i < this.productCounter; i++) {
             // Display product info by using the toSring method of the product class
-            System.out.println("Producto " + (i+1) + ": " + products[i].toString());
+            System.out.println("Producto " + (i+1) + ": " + products[i]);
         }
     }
 }

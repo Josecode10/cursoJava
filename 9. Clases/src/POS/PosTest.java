@@ -24,7 +24,7 @@ public class PosTest {
         order1.addProduct(blouse);
 
         // Show orden information
-        System.out.println("\n" + order1.toString() + "\n");
+        System.out.println("\n" + order1 + "\n");
         order1.showProducts();
 
         // create another order
@@ -36,7 +36,7 @@ public class PosTest {
         order2.addProduct(hoodie);
 
         // show order information
-        System.out.println("\n" + order2.toString() + "\n");
+        System.out.println("\n" + order2 + "\n");
         order2.showProducts();
     
     }
