@@ -1,6 +1,7 @@
 package colecciones;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Listas {
@@ -20,6 +21,22 @@ public class Listas {
         for(String dias: miLista) {
             System.out.println("Día: " + dias);
         }
+
+        // Funciones lambda
+        // Función anónima --- poco código (compacta)
+        System.out.println("\n --- Iterar en una lista con una función lambda --- \n");
+        miLista.forEach(dias -> {
+            System.out.println("Día: " + dias);
+        });
+
+        System.out.println("\n--- Más simplificado ---\n");
+        miLista.forEach(System.out::println);
+        
+        // Otra forma de crear una lista
+        System.out.println("\n--- Otra forma de crear una lista ---\n");
+        List<String> nombres = Arrays.asList("jose", "jessi", "irene");
+        nombres.forEach(System.out::println);
+
         
     }
 
