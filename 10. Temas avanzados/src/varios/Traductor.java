@@ -1,4 +1,4 @@
-import javax.annotation.processing.SupportedSourceVersion;
+package varios;
 
 // Estandarizar el comportamiento de nuestro código
 public interface Traductor {

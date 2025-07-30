@@ -1,3 +1,4 @@
+package varios;
 public class ClasesAbstractas {
     public static void main(String[] args) {
         // Son aquellas clases que dejan sin implementar

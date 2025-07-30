@@ -2,3 +2,6 @@ primeras
 lineas
 del
 archivo
+Nuevo
+Esto es nuevo
+Otra l�nea cualquiera

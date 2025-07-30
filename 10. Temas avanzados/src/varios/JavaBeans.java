@@ -1,3 +1,4 @@
+package varios;
 import java.io.Serializable;
 
 public class JavaBeans {

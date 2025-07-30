@@ -1,3 +1,4 @@
+package varios;
 public class ArgumentosVariables {
     public static void main(String[] args) {
         // --- Argumentos variables ----
