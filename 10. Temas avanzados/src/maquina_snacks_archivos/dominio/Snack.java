@@ -48,6 +48,10 @@ public class Snack implements Serializable { // Javabean
         return "Snack [snackId=" + snackId + ", nombre=" + nombre + ", precio=" + precio + "]";
     }
 
+    public String escribirSnack() {
+        return snackId + "," + nombre + "," + precio;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

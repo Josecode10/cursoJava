@@ -6,7 +6,8 @@ import java.util.Scanner;
 
 import maquina_snacks_archivos.dominio.Snack;
 import maquina_snacks_archivos.servicio.IServicioSnacks;
-import maquina_snacks_archivos.servicio.ServicioSnacksLista;
+import maquina_snacks_archivos.servicio.ServicioSnacksArchivos;
+// import maquina_snacks_archivos.servicio.ServicioSnacksLista;
 
 public class MaquinaSnacks {
     public static void main(String[] args) { maquinaSnacks(); }
@@ -15,7 +16,8 @@ public class MaquinaSnacks {
         var salir = false;
         var teclado = new Scanner(System.in);
         // Creamos el objeto para obtener el servicio de snacks (tipo lista)
-        IServicioSnacks servicioSnacks = new ServicioSnacksLista();
+        // IServicioSnacks servicioSnacks = new ServicioSnacksLista();
+        IServicioSnacks servicioSnacks = new ServicioSnacksArchivos();
         // Lista que va almacenando los productos escogidos por el usuario
         List<Snack> productos = new ArrayList<>();
         System.out.println("*** Máquina de Snacks ***"); // Agregar titulo
@@ -30,19 +32,20 @@ public class MaquinaSnacks {
             } finally {
                 System.out.println(); // Un salto de línea después de cada iteración
             }
-            
+
         }
     }
 
-    private static int mostrarMenu(Scanner teclado) { 
+    private static int mostrarMenu(Scanner teclado) {
         System.out.print("""
                 Menu:
                 1) Comprar snack
                 2) Mostrar ticket
                 3) Agregar nuevo snack
-                4) Salir
+                4) Inventario snacks
+                5) Salir
                 Elige una opción:\s""");
-        
+
         // Retornar el valor ingresado (int)
         return Integer.parseInt(teclado.nextLine());
     }
@@ -54,7 +57,8 @@ public class MaquinaSnacks {
             case 1 -> comprarSnack(teclado, productos, servicioSnacks);
             case 2 -> mostrarTicket(productos);
             case 3 -> agregarSnack(teclado, servicioSnacks);
-            case 4 -> {
+            case 4 -> listarInventarioSnacks(teclado, servicioSnacks);
+            case 5 -> {
                 System.out.println("¡Has salido del programa!");
                 return salir = true;
             }
@@ -63,13 +67,17 @@ public class MaquinaSnacks {
         return salir;
     }
 
+    private static void listarInventarioSnacks(Scanner teclado, IServicioSnacks servicioSnacks) {
+        servicioSnacks.mostrarSnacks();
+    }
+
     private static void comprarSnack(Scanner teclado, List<Snack> productos, IServicioSnacks servicioSnacks) {
         System.out.print("¿Qué snack quieres comprar (id)? ");
         var idSnack = Integer.parseInt(teclado.nextLine());
         // De entrada se asume que el ID no existe
-        var snackEncontrado = false; 
+        var snackEncontrado = false;
         // Validar que el snack exista en la lista de snacks
-        for(var snack: servicioSnacks.getSnacks()) { 
+        for(var snack: servicioSnacks.getSnacks()) {
             if (idSnack == snack.getSnackId()) {
                 // Agregar el snack a la lista de productos
                 productos.add(snack);
@@ -102,7 +110,7 @@ public class MaquinaSnacks {
         var precio = Double.parseDouble(teclado.nextLine());
         // Se usa el método de la clase "Snacks"
         // El método es estático por lo tanto no se requiere crear un nuevo objeto
-        servicioSnacks.agregarSnack(new Snack(nombre, precio));        
+        servicioSnacks.agregarSnack(new Snack(nombre, precio));
         System.out.println("¡Snack agregado exitosamente!");
         // Mostrar la nueva lista de snacks
         servicioSnacks.mostrarSnacks();
