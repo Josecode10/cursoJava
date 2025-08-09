@@ -6,9 +6,9 @@ import java.util.Scanner;
 public class Main {
 
     // IMPORTANT: Update these constants with your own database credentials and details.
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydb";
-    private static final String USER = "root";
-    private static final String PASSWORD = "admin";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/your_database_name";
+    private static final String USER = "your_username";
+    private static final String PASSWORD = "your_password";
 
     // The name of the table we will be interacting with.
     private static final String TABLE_NAME = "users";
@@ -29,9 +29,13 @@ public class Main {
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
-            // Get the user's menu choice.
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character.
+            try {
+                // Get the user's menu choice.
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                choice = 0;
+            }
 
             // Execute the selected action.
             switch (choice) {
