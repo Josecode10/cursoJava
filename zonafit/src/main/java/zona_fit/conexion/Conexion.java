@@ -9,9 +9,10 @@ public class Conexion {
         var baseDatos = "zona_fit_db";
         var url = "jdbc:mysql://localhost:3306/" + baseDatos;
         var usuario = "root";
-        var password = "j0s3m@nu87";
+        var password = "admin";
 
         try {
+            // Clase de conexión a la base de datos
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Objeto que permite establecer una conexión a la base de datos
             conexion = DriverManager.getConnection(url, usuario, password);
