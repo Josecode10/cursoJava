@@ -20,6 +20,8 @@ public class Cliente {
         this.membresia = membresia;
     }
 
+    // Constructor con todos los parámetros
+    // Recuperar los objetos de tipo cliente --- objetos ya creados llamados de la bd
     public Cliente(int id, String nombre, String apellido, int membresia) {
         this(nombre, apellido, membresia);
         this.id = id;
