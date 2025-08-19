@@ -1,5 +1,6 @@
 package zona_fit.datos;
 
+// Importar las clases necesarias para trabajar con la base de datos
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,49 +10,57 @@ import java.util.List;
 import zona_fit.dominio.Cliente;
 import static zona_fit.conexion.Conexion.getConexion;
 
-// Patron de diseño DAO ( Data Access Object)
-// Patro utilizado para acceder a la información de una entidad (db table)
-// Cliente DAO                          clientes        Base de datos (tabla clientes) -- ORM (object relational maping)
-// listar clientes READ (select)        - id            - id
-// insertar clientes CREATE (insert)    - nombre        - nombre
-// actualizar clientes UPDATE (update)  - apellido      - apellido
-// eliminar clientes DELETE (delete)    - membresia     - membresia
-
 public class ClienteDAO implements IClienteDAO {
     @Override
     public List<Cliente> listarClientes() {
+        // Crear una lista de tipo Cliente
+        // Esta lista se va a llenar con los objetos cliente que se recuperen de la base de datos
+        // Se usa la clase ArrayList que implementa la interface List
         List<Cliente> clientes = new ArrayList<>();
-        // Preparar la sentencia de tipo sql que vamos a ejecutar hacia la base de datos
-        // Importar la  interface preparedstatement
+        // Crear los objetos que se van a usar para ejecutar la consulta
+        // El objeto PreparedStatement se usa para preparar una sentencia sql
         PreparedStatement ps;
-        // Importar la interface resultset
-        // Este objeto contiene el resultado de la consulta
+        // El objeto ResultSet se usa para almacenar el resultado de una consulta sql
+        // El objeto ResultSet se usa para recorrer los registros de la consulta
         ResultSet rs;
+        // Crear un objeto de tipo Connection para establecer la conexión a la base de datos
+        // Se usa el método estático getConexion de la clase Conexion
         Connection con = getConexion();
+        // La sentencia sql que se va a ejecutar
+        // Se usa la sentencia "SELECT * FROM cliente ORDER BY id" para recuperar todos los datos de la tabla cliente
+        // Se usa el asterisco (*) para recuperar todos los campos de la tabla
         var sql = "SELECT * FROM cliente ORDER BY id";
 
+        // El siguiente código puede arrojar una excepción
+        // Se usa un bloque try-catch para manejar la excepción
         try{
-            // Con la variable preparedStatement 
-            // vamos a recibir un objeto ps 
-            // que vamos a obtener del objeto tipo conexión
+            // Preparar la sentencia sql
+            // El método prepareStatement recibe una sentencia sql
             ps = con.prepareStatement(sql);
-            // Ejecutar la sentencia tipo sql
+            // Ejecutar la sentencia sql
+            // El método executeQuery retorna un objeto de tipo ResultSet
             rs = ps.executeQuery();
-            // Iterar cada uno de los resultados
-            // Si no hay registros que iterar el método "next" retorna falso
-            // Se posiciona en el primer registro a iterar 
-            while (rs.next()) { 
+            // Mientras haya un registro en el objeto ResultSet
+            // El método next se usa para recorrer los registros
+            while (rs.next()) {
+                // Crear un objeto cliente y asignar los valores de la consulta
                 var cliente = new Cliente();
+                // Asignar los valores de la consulta a los atributos del objeto cliente
                 cliente.setId(rs.getInt("id"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("apellido"));
                 cliente.setMembresia(rs.getInt("membresia"));
+                // Agregar el objeto cliente a la lista de clientes
                 clientes.add(cliente);
             }
-
         } catch(Exception e) {
+            // Si ocurre una excepción, se imprime el mensaje de error
+            // Se usa el método getMessage para obtener el mensaje de la excepción
             System.out.println("¡Error al listar clientes!: " + e.getMessage());
+        // Finalmente, se cierra la conexión a la base de datos
         } finally {
+            // Se usa un bloque try-catch para cerrar la conexión
+            // Si ocurre una excepción al cerrar la conexión, se imprime el mensaje de error
             try {
                 // Cerrar el objeto de conexion
                 con.close();
@@ -59,6 +68,8 @@ public class ClienteDAO implements IClienteDAO {
                 System.out.println("¡Error al cerrar la conexión!" + e.getMessage());
             }
         }
+        // Retornar la lista de clientes
+        // Esta lista contiene los objetos cliente que se recuperaron de la base de datos
         return clientes;
     }
 
