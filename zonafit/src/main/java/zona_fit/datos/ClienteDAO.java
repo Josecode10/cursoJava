@@ -22,12 +22,13 @@ public class ClienteDAO implements IClienteDAO {
     public List<Cliente> listarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         // Preparar la sentencia de tipo sql que vamos a ejecutar hacia la base de datos
+        // Importar la  interface preparedstatement
         PreparedStatement ps;
         // Importar la interface resultset
         // Este objeto contiene el resultado de la consulta
         ResultSet rs;
         Connection con = getConexion();
-        var sql = "select * from cliente order by id";
+        var sql = "SELECT * FROM cliente ORDER BY id";
 
         try{
             // Con la variable preparedStatement 
