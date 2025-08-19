@@ -9,6 +9,14 @@ import java.util.List;
 import zona_fit.dominio.Cliente;
 import static zona_fit.conexion.Conexion.getConexion;
 
+// Patron de diseño DAO ( Data Access Object)
+// Patro utilizado para acceder a la información de una entidad (db table)
+// Cliente DAO                          clientes        Base de datos (tabla clientes) -- ORM (object relational maping)
+// listar clientes READ (select)        - id            - id
+// insertar clientes CREATE (insert)    - nombre        - nombre
+// actualizar clientes UPDATE (update)  - apellido      - apellido
+// eliminar clientes DELETE (delete)    - membresia     - membresia
+
 public class ClienteDAO implements IClienteDAO {
     @Override
     public List<Cliente> listarClientes() {
@@ -93,7 +101,7 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public boolean unificarCliente(Cliente cliente) {
+    public boolean modificarCliente(Cliente cliente) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'unificarCliente'");
     }

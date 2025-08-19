@@ -1,5 +1,9 @@
 package zona_fit.dominio;
 
+// Por buenas prácticas si tenemos una tabla en la bd
+// vamos a crear una clase en java que la represente
+// java --- atributos
+// Database --- columnas 
 public class Cliente {
     private int id;
     private String nombre;
@@ -39,22 +43,22 @@ public class Cliente {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getApellido() {
         return apellido;
     }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
+    
     public int getMembresia() {
         return membresia;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+        
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
     public void setMembresia(int membresia) {
         this.membresia = membresia;
     }
