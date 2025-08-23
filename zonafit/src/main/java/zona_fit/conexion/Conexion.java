@@ -1,8 +1,10 @@
 package zona_fit.conexion;
 
+import java.lang.reflect.Array;
 // Importar las clases necesarias para trabajar con la base de datos
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 // Clase que permite establecer una conexión a la base de datos
 // Esta clase contiene un método estático que retorna un objeto de tipo Connection
@@ -10,7 +12,6 @@ public class Conexion {
     // Método estático que retorna un objeto de tipo Connection
     // Este método se usa para establecer la conexión a la base de datos
     public static Connection getConexion() {
-        // Declarar un objeto de tipo Connection
         // Este objeto se usa para establecer la conexión a la base de datos
         Connection conexion = null;
         // Definir los parámetros de conexión a la base de datos

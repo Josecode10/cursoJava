@@ -13,20 +13,15 @@ import static zona_fit.conexion.Conexion.getConexion;
 public class ClienteDAO implements IClienteDAO {
     @Override
     public List<Cliente> listarClientes() {
-        // Crear una lista de tipo Cliente
         // Esta lista se va a llenar con los objetos cliente que se recuperen de la base de datos
         // Se usa la clase ArrayList que implementa la interface List
         List<Cliente> clientes = new ArrayList<>();
-        // Crear los objetos que se van a usar para ejecutar la consulta
         // El objeto PreparedStatement se usa para preparar una sentencia sql
         PreparedStatement ps;
         // El objeto ResultSet se usa para almacenar el resultado de una consulta sql
-        // El objeto ResultSet se usa para recorrer los registros de la consulta
         ResultSet rs;
         // Crear un objeto de tipo Connection para establecer la conexión a la base de datos
-        // Se usa el método estático getConexion de la clase Conexion
         Connection con = getConexion();
-        // La sentencia sql que se va a ejecutar
         // Se usa la sentencia "SELECT * FROM cliente ORDER BY id" para recuperar todos los datos de la tabla cliente
         // Se usa el asterisco (*) para recuperar todos los campos de la tabla
         var sql = "SELECT * FROM cliente ORDER BY id";
@@ -75,16 +70,19 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public boolean buscarClientePorId(Cliente cliente) {
+        // Crear los objetos que se van a usar para ejecutar la consulta
         PreparedStatement ps;
+        // El objeto ResultSet se usa para almacenar el resultado de una consulta sql
         ResultSet rs;
-        // Tanto para "con" como para "sql" se puede usar "var" en la declaración
+        // Crear un objeto de tipo Connection para establecer la conexión a la base de datos  
         Connection con = getConexion();
-        // Donde el "id" sea un id en particular
-        // Solo vamos a recuperar un registro
+        // Se usa el signo de interrogación (?) para indicar que se va a usar un parámetro
         String sql = "select * from cliente where id = ?";
         // El siguiente código puede arrojar una excepción
         try {
+            // Preparar la sentencia sql
             ps = con.prepareStatement(sql);
+            // El método setInt se usa para asignar un valor entero al parámetro
             ps.setInt(1, cliente.getId());
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -108,8 +106,33 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public boolean agregarCliente(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarCliente'");
+        // Crear los objetos que se van a usar para ejecutar la consulta
+        Connection con = getConexion();
+        // El objeto PreparedStatement se usa para preparar una sentencia sql
+        PreparedStatement ps;
+        // Se usan los signos de interrogación (?) para indicar que se van a usar parámetros
+        String sql = "INSERT INTO cliente (nombre, apellido, membresia) VALUES (?, ?, ?)";
+        try {
+            // El método prepareStatement recibe una sentencia sql
+            ps = con.prepareStatement(sql);
+            // El método setString se usa para asignar un valor de tipo cadena al parámetro
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            // El método setInt se usa para asignar un valor de tipo entero al parámetro    
+            ps.setInt(3, cliente.getMembresia());
+            // El método execute se usa para ejecutar una sentencia sql que no retorna un resultado
+            ps.execute();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error al agregar cliente: " + e.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.out.println("Error al cerrar conexión: " + e.getMessage());
+            }
+        }
+        return false;
     }
 
     @Override
@@ -127,14 +150,14 @@ public class ClienteDAO implements IClienteDAO {
     public static void main(String[] args) {
         IClienteDAO clienteDao = new ClienteDAO();
 
-        // Listar clientes
+        // // Listar clientes
         // System.out.println("*** Listar Clientes ***");
         // var clientes = clienteDao.listarClientes();
 
         // clientes.forEach(System.out::println);
 
         // Buscar por "id"
-        var cliente1 = new Cliente(3);
+        var cliente1 = new Cliente(4);
         System.out.println("Cliente antes de la búsqueda: " + cliente1);
         var encontrado = clienteDao.buscarClientePorId(cliente1);
         if (encontrado) {

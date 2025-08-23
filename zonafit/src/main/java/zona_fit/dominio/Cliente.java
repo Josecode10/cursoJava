@@ -10,22 +10,22 @@ public class Cliente {
     private String apellido;
     private int membresia;
 
+    // Constructor por defecto
+    // Se usa para crear un objeto cliente sin asignar valores a los atributos
     public Cliente() {}
 
-    // Datos se pueden eliminar solo por ID, por eso este constructor
     public Cliente(int id) {
         this.id = id;
     }
 
-    // Constructor
+    // Constructor que recibe los parámetros nombre, apellido y membresia
+    // Se usa para crear un objeto cliente con los valores de nombre, apellido y membresia
     public Cliente(String nombre, String apellido, int membresia) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.membresia = membresia;
     }
 
-    // Constructor con todos los parámetros
-    // Recuperar los objetos de tipo cliente --- objetos ya creados llamados de la bd
     public Cliente(int id, String nombre, String apellido, int membresia) {
         this(nombre, apellido, membresia);
         this.id = id;
