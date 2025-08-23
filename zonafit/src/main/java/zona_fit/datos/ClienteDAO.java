@@ -164,8 +164,22 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarCliente'");
+        PreparedStatement ps;
+        Connection con = getConexion();
+        String sql = "DELETE FROM cliente WHERE id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cliente.getId());
+        } catch (Exception e) {
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.out.println("Error al cerrar conexión: " + e.getMessage());
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
