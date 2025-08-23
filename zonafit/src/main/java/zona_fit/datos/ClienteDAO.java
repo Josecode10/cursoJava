@@ -89,9 +89,8 @@ public class ClienteDAO implements IClienteDAO {
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("apellido"));
                 cliente.setMembresia(rs.getInt("membresia"));
-                return true;
+                return true; // Cliente encontrado
             }
-
         } catch(Exception e) {
             System.out.println("¡Error al recuperar cliente por id!: " + e.getMessage());
         } finally {
@@ -101,7 +100,7 @@ public class ClienteDAO implements IClienteDAO {
                 System.out.println("¡Error al cerrar conexión" + e.getMessage());
             }
         }
-        return false;
+        return false; // Cliente no encontrado
     }
 
     @Override
@@ -137,8 +136,30 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public boolean modificarCliente(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'unificarCliente'");
+        PreparedStatement ps; 
+        Connection con = getConexion();
+        String sql = "UPDATE cliente SET nombre = ?, apellido = ?, membresia = ? WHERE id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            // Asignar los valores de los parámetros llamando a los métodos get del objeto cliente
+            // El orden de los parámetros debe coincidir con el orden de los signos de interrogación (?)
+            // El id se usa en la cláusula WHERE para identificar el registro que se va a modificar
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setInt(3, cliente.getMembresia());
+            ps.setInt(4, cliente.getId());
+            ps.execute();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error al modificar cliente: " + e.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.out.println("Error al cerrar conexión: " + e.getMessage());
+            }
+        }
+        return false;
     }
 
     @Override
@@ -148,24 +169,40 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     public static void main(String[] args) {
+        // Crear un objeto de tipo ClienteDAO para llamar a los métodos de la clase
         IClienteDAO clienteDao = new ClienteDAO();
-
-        // // Listar clientes
-        // System.out.println("*** Listar Clientes ***");
-        // var clientes = clienteDao.listarClientes();
-
-        // clientes.forEach(System.out::println);
-
         // Buscar por "id"
-        var cliente1 = new Cliente(4);
-        System.out.println("Cliente antes de la búsqueda: " + cliente1);
-        var encontrado = clienteDao.buscarClientePorId(cliente1);
-        if (encontrado) {
-            System.out.println("Cliente encontrado: " + cliente1);
+        // var cliente1 = new Cliente(4);
+        // System.out.println("Cliente antes de la búsqueda: " + cliente1);
+        // var encontrado = clienteDao.buscarClientePorId(cliente1);
+        // if (encontrado) {
+        //     System.out.println("Cliente encontrado: " + cliente1);
+        // } else {
+        //     System.out.println("No se ha encontrado registro: " + cliente1);
+        // }
+        // Agregar cliente
+        // var nuevoCLiente = new Cliente("Daniel", "Ortiz", 300); // Crear un objeto cliente
+        // // Llamar al método agregarCliente y pasar el objeto cliente como parámetro
+        // var agregado = clienteDao.agregarCliente(nuevoCLiente);
+        // // Verificar si se agregó el cliente
+        // if (agregado) {
+        //     System.out.println("Cliente agregado." + nuevoCLiente);
+        // } else {
+        //     System.out.println("El cliente no se pudo agregar." + nuevoCLiente);
+        // }
+        // Modificar cliente
+        // Se usa el constructor con todos los parámetros para modificar el cliente
+        var modificarCliente = new Cliente(5, "Carlos Daniel", "Ortiz", 300);
+        var modificado = clienteDao.modificarCliente(modificarCliente);
+        if (modificado) {
+            System.out.println("Cliente modificado: " + modificarCliente);
         } else {
-            System.out.println("No se ha encontrado registro: " + cliente1);
+            System.out.println("El cliente no se modificó: " + modificarCliente);
         }
-
+        // Listar clientes
+        System.out.println("*** Listar Clientes ***");
+        var clientes = clienteDao.listarClientes(); // Llamar al método listarClientes
+        clientes.forEach(System.out::println); // Imprimir la lista de clientes usando expresiones lambda
     }
     
 }
