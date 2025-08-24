@@ -22,7 +22,7 @@ public class ZonaFitApp {
                     System.out.println("Has salido del sistema. ¡Hasta luego!");
                     continuar = true; // Salir del bucle
                 }
-                default -> System.out.println("Opción no válida");
+                default -> System.out.println("\nOpción no válida\n");
             }
         }
 
@@ -45,16 +45,17 @@ public class ZonaFitApp {
             opcion = Integer.parseInt(teclado.nextLine());
             return opcion;
         } catch (Exception e) {
-            System.out.println("Se debe ingresar un entero: " + e.getMessage());
+            System.out.println("\nSe debe ingresar un entero: " + e.getMessage());
         }
         return opcion;
     }
 
     static void listarClientes() {
         IClienteDAO clienteDao = new ClienteDAO(); // Crear un objeto de tipo ClienteDAO para llamar a los métodos de la clase
-        System.out.println("*** Listar Clientes ***");
+        System.out.println("\n*** Listar Clientes ***");
         var clientes = clienteDao.listarClientes(); // Llamar al método listarClientes
         clientes.forEach(System.out::println); // Imprimir la lista de clientes usando expresiones lambda
+        System.out.println();
     }
 
     static void agregarcliente(Scanner teclado) {}
