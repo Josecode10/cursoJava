@@ -171,41 +171,17 @@ public class ClienteDAO implements IClienteDAO {
         // Crear un objeto de tipo ClienteDAO para llamar a los métodos de la clase
         IClienteDAO clienteDao = new ClienteDAO();
         // Buscar por "id"
-        // var cliente1 = new Cliente(4);
-        // System.out.println("Cliente antes de la búsqueda: " + cliente1);
-        // var encontrado = clienteDao.buscarClientePorId(cliente1);
-        // if (encontrado) {
-        //     System.out.println("Cliente encontrado: " + cliente1);
-        // } else {
-        //     System.out.println("No se ha encontrado registro: " + cliente1);
-        // }
-        // Agregar cliente
-        // var nuevoCLiente = new Cliente("Daniel", "Ortiz", 300); // Crear un objeto cliente
-        // // Llamar al método agregarCliente y pasar el objeto cliente como parámetro
-        // var agregado = clienteDao.agregarCliente(nuevoCLiente);
-        // // Verificar si se agregó el cliente
-        // if (agregado) {
-        //     System.out.println("Cliente agregado." + nuevoCLiente);
-        // } else {
-        //     System.out.println("El cliente no se pudo agregar." + nuevoCLiente);
-        // }
-        // Modificar cliente
-        // Se usa el constructor con todos los parámetros para modificar el cliente
-        // var modificarCliente = new Cliente(5, "Carlos Daniel", "Ortiz", 300);
-        // var modificado = clienteDao.modificarCliente(modificarCliente);
-        // if (modificado) {
-        //     System.out.println("Cliente modificado: " + modificarCliente);
-        // } else {
-        //     System.out.println("El cliente no se modificó: " + modificarCliente);
-        // }
-        // Eliminar cliente
-        var eliminarCliente = new Cliente(5);
-        var eliminado = clienteDao.eliminarCliente(eliminarCliente);
-        if (eliminado) {
-            System.out.println("El cliente fue eliminado: " + eliminarCliente);
+        var cliente1 = new Cliente(4);
+        System.out.println("Cliente antes de la búsqueda: " + cliente1);
+        var encontrado = clienteDao.buscarClientePorId(cliente1);
+        if (encontrado) {
+            System.out.println("Cliente encontrado: " + cliente1);
         } else {
-            System.out.println("No se eliminó cliente: " + eliminarCliente);
+            System.out.println("No se ha encontrado registro: " + cliente1);
         }
+        
+        
+        
         
     }
     
