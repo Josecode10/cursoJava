@@ -13,40 +13,23 @@ import static zona_fit.conexion.Conexion.getConexion;
 public class ClienteDAO implements IClienteDAO {
     @Override
     public List<Cliente> listarClientes() {
-        // Esta lista se va a llenar con los objetos cliente que se recuperen de la base de datos
-        // Se usa la clase ArrayList que implementa la interface List
-        List<Cliente> clientes = new ArrayList<>();
-        // El objeto PreparedStatement se usa para preparar una sentencia sql
-        PreparedStatement ps;
-        // El objeto ResultSet se usa para almacenar el resultado de una consulta sql
-        ResultSet rs;
-        // Crear un objeto de tipo Connection para establecer la conexión a la base de datos
-        Connection con = getConexion();
-        // Se usa la sentencia "SELECT * FROM cliente ORDER BY id" para recuperar todos los datos de la tabla cliente
-        // Se usa el asterisco (*) para recuperar todos los campos de la tabla
-        var sql = "SELECT * FROM cliente ORDER BY id";
-
-        // El siguiente código puede arrojar una excepción
-        // Se usa un bloque try-catch para manejar la excepción
+        List<Cliente> clientes = new ArrayList<>(); // Crear una lista para almacenar los clientes
+        PreparedStatement ps; // El objeto PreparedStatement se usa para preparar una sentencia sql
+        ResultSet rs; // El objeto ResultSet se usa para almacenar el resultado de una consulta sql
+        Connection con = getConexion(); // Crear un objeto de tipo Connection para establecer la conexión a la base de datos
+        var sql = "SELECT * FROM cliente ORDER BY id"; // Sentencia sql para listar los clientes
+        
         try{
-            // Preparar la sentencia sql
-            // El método prepareStatement recibe una sentencia sql
             ps = con.prepareStatement(sql);
-            // Ejecutar la sentencia sql
-            // El método executeQuery retorna un objeto de tipo ResultSet
             rs = ps.executeQuery();
-            // Mientras haya un registro en el objeto ResultSet
-            // El método next se usa para recorrer los registros
-            while (rs.next()) {
-                // Crear un objeto cliente y asignar los valores de la consulta
-                var cliente = new Cliente();
-                // Asignar los valores de la consulta a los atributos del objeto cliente
-                cliente.setId(rs.getInt("id"));
+            while (rs.next()) { // Iterar sobre el resultado de la consulta
+                var cliente = new Cliente(); // Crear un objeto cliente
+                // Llenar el objeto cliente con los datos del resultado de la consulta
+                cliente.setId(rs.getInt("id")); 
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("apellido"));
                 cliente.setMembresia(rs.getInt("membresia"));
-                // Agregar el objeto cliente a la lista de clientes
-                clientes.add(cliente);
+                clientes.add(cliente); // Agregar el objeto cliente a la lista de clientes
             }
         } catch(Exception e) {
             // Si ocurre una excepción, se imprime el mensaje de error
@@ -223,10 +206,7 @@ public class ClienteDAO implements IClienteDAO {
         } else {
             System.out.println("No se eliminó cliente: " + eliminarCliente);
         }
-        // Listar clientes
-        System.out.println("*** Listar Clientes ***");
-        var clientes = clienteDao.listarClientes(); // Llamar al método listarClientes
-        clientes.forEach(System.out::println); // Imprimir la lista de clientes usando expresiones lambda
+        
     }
     
 }

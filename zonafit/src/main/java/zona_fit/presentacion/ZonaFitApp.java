@@ -2,6 +2,9 @@ package zona_fit.presentacion;
 
 import java.util.Scanner;
 
+import zona_fit.datos.ClienteDAO;
+import zona_fit.datos.IClienteDAO;
+
 public class ZonaFitApp {
     public static void main(String[] args) {
         // Crear un objeto Scanner para leer la entrada del usuario
@@ -11,7 +14,7 @@ public class ZonaFitApp {
         while (!continuar) { // Bucle del menú
             var opcion = mostrarMenu(teclado); // Mostrar el menú y obtener la opción del usuario
             switch (opcion) {
-                case 1 -> listarClientes(teclado); 
+                case 1 -> listarClientes(); 
                 case 2 -> agregarcliente(teclado);
                 case 3 -> modificarCliente(teclado);
                 case 4 -> eliminarCliente(teclado);
@@ -47,7 +50,12 @@ public class ZonaFitApp {
         return opcion;
     }
 
-    static void listarClientes(Scanner teclado) {}
+    static void listarClientes() {
+        IClienteDAO clienteDao = new ClienteDAO(); // Crear un objeto de tipo ClienteDAO para llamar a los métodos de la clase
+        System.out.println("*** Listar Clientes ***");
+        var clientes = clienteDao.listarClientes(); // Llamar al método listarClientes
+        clientes.forEach(System.out::println); // Imprimir la lista de clientes usando expresiones lambda
+    }
 
     static void agregarcliente(Scanner teclado) {}
 
