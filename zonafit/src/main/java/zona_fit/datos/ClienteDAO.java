@@ -166,23 +166,4 @@ public class ClienteDAO implements IClienteDAO {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        // Crear un objeto de tipo ClienteDAO para llamar a los métodos de la clase
-        IClienteDAO clienteDao = new ClienteDAO();
-        // Buscar por "id"
-        var cliente1 = new Cliente(4);
-        System.out.println("Cliente antes de la búsqueda: " + cliente1);
-        var encontrado = clienteDao.buscarClientePorId(cliente1);
-        if (encontrado) {
-            System.out.println("Cliente encontrado: " + cliente1);
-        } else {
-            System.out.println("No se ha encontrado registro: " + cliente1);
-        }
-        
-        
-        
-        
-    }
-    
 }

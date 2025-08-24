@@ -40,7 +40,8 @@ public class ZonaFitApp {
                 2) Agregar cliente
                 3) Modificar cliente
                 4) Eliminar cliente
-                5) Salir
+                5) Buscar cliente
+                6) Salir
                 Escoge una opcion:\s
                 """);
         try {
@@ -74,7 +75,7 @@ public class ZonaFitApp {
 
     static void modificarCliente(Scanner teclado, IClienteDAO clienteDao) {
         // Modificar cliente
-        Se usa el constructor con todos los parámetros para modificar el cliente
+        // Se usa el constructor con todos los parámetros para modificar el cliente
         var modificarCliente = new Cliente(5, "Carlos Daniel", "Ortiz", 300);
         var modificado = clienteDao.modificarCliente(modificarCliente);
         if (modificado) {
@@ -95,6 +96,16 @@ public class ZonaFitApp {
         }
     }
 
-    static void buscarCliente(Scanner teclado, IClienteDAO clienteDao) {}
+    static void buscarCliente(Scanner teclado, IClienteDAO clienteDao) {
+        // Buscar por "id"
+        var cliente1 = new Cliente(4);
+        System.out.println("Cliente antes de la búsqueda: " + cliente1);
+        var encontrado = clienteDao.buscarClientePorId(cliente1);
+        if (encontrado) {
+            System.out.println("Cliente encontrado: " + cliente1);
+        } else {
+            System.out.println("No se ha encontrado registro: " + cliente1);
+        }
+    }
 
 }
