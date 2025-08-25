@@ -8,18 +8,23 @@ import zona_fit.dominio.Cliente;
 
 public class ZonaFitApp {
     public static void main(String[] args) {
+        zonaFitApp();
+    }
+    
+    private static void zonaFitApp(){
         IClienteDAO clienteDao = new ClienteDAO();
         var teclado = new Scanner(System.in); // Scanner para leer la entrada del usuario
-        System.out.println("\nBienvenido a ZonaFit\n");
+        System.out.println("\n*** Bienvenido a ZonaFit ***\n");
         var salir = false; // Variable para controlar el bucle del menú
         while (!salir) { // Bucle del menú
             var opcion = mostrarMenu(teclado); // Mostrar el menú y obtener la opción del usuario
             switch (opcion) {
-                case 1 -> listarClientes(clienteDao); 
-                case 2 -> agregar(teclado, clienteDao);
-                case 3 -> modificar(teclado, clienteDao);
-                case 4 -> eliminar(teclado, clienteDao);
-                case 5 -> {
+                case 1 -> listarClientes(clienteDao);
+                case 2 -> buscar(teclado, clienteDao);
+                case 3 -> agregar(teclado, clienteDao);
+                case 4 -> modificar(teclado, clienteDao);
+                case 5 -> eliminar(teclado, clienteDao);
+                case 6 -> {
                     System.out.println("Has salido del sistema. ¡Hasta luego!");
                     salir = true; // Salir del bucle
                 }
@@ -28,16 +33,16 @@ public class ZonaFitApp {
         }
     }
 
-    // Mostrar el menú y devolver la opción seleccionada
     static int mostrarMenu(Scanner teclado){
         var opcion = 0;
         System.out.print("""
                 Qué deseas hacer:
                 1) Listar clientes
-                2) Agregar cliente
-                3) Modificar cliente
-                4) Eliminar cliente
-                5) Salir
+                2) Buscar cliente
+                3) Agregar cliente
+                4) Modificar cliente
+                5) Eliminar cliente
+                6) Salir
                 Escoge una opcion:\s""");
         try {
             opcion = Integer.parseInt(teclado.nextLine());
@@ -47,12 +52,29 @@ public class ZonaFitApp {
         }
         return opcion;
     }
-
+    
+    // Métodos para realizar operacion CRUD
     static void listarClientes(IClienteDAO clienteDao) {
         System.out.println("\n*** Listar Clientes ***");
         var clientes = clienteDao.listarClientes(); // Llamar al método listarClientes
         clientes.forEach(System.out::println); // Imprimir la lista de clientes usando expresiones lambda
         System.out.println();
+    }
+
+    static void buscar(Scanner teclado, IClienteDAO clienteDao){
+        try {
+            System.out.println("Ingresar Id: ");
+            var id = Integer.parseInt(teclado.nextLine());
+            Cliente cliente = new Cliente(id);
+            var buscar = clienteDao.buscarClientePorId(cliente);
+            if (buscar) {
+                System.out.println("Cliente encontrado: " + cliente + "\n");
+            } else {
+                System.out.println("El cliente no existe: " + cliente + "\n");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al ingresar id: " + e.getMessage() + "\n");
+        }
     }
 
     static void agregar(Scanner teclado, IClienteDAO clienteDao) {
