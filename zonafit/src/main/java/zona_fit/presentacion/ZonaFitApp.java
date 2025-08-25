@@ -31,15 +31,14 @@ public class ZonaFitApp {
     // Mostrar el menú y devolver la opción seleccionada
     static int mostrarMenu(Scanner teclado){
         var opcion = 0;
-        System.out.println("""
+        System.out.print("""
                 Qué deseas hacer:
                 1) Listar clientes
                 2) Agregar cliente
                 3) Modificar cliente
                 4) Eliminar cliente
                 5) Salir
-                Escoge una opcion:\s
-                """);
+                Escoge una opcion:\s""");
         try {
             opcion = Integer.parseInt(teclado.nextLine());
             return opcion;
@@ -83,12 +82,19 @@ public class ZonaFitApp {
 
     static void eliminar(Scanner teclado, IClienteDAO clienteDao) {
         // Eliminar cliente
-        var eliminarCliente = new Cliente(5);
-        var eliminado = clienteDao.eliminarCliente(eliminarCliente);
-        if (eliminado) {
-            System.out.println("El cliente fue eliminado: " + eliminarCliente);
-        } else {
-            System.out.println("No se eliminó cliente: " + eliminarCliente);
+        int id;
+        try {
+            System.out.print("Ingresar el id del cliente a eliminar: ");
+            id = Integer.parseInt(teclado.nextLine());
+            var eliminarCliente = new Cliente(id);
+            var eliminado = clienteDao.eliminarCliente(eliminarCliente);
+            if (eliminado) {
+                System.out.println("El cliente fue eliminado: " + eliminarCliente);
+            } else {
+                System.out.println("No se eliminó cliente: " + eliminarCliente);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al ingresar id: " + e.getMessage());
         }
     }
     
