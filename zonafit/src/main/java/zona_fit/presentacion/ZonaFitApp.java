@@ -11,8 +11,8 @@ public class ZonaFitApp {
         IClienteDAO clienteDao = new ClienteDAO();
         var teclado = new Scanner(System.in); // Scanner para leer la entrada del usuario
         System.out.println("\nBienvenido a ZonaFit\n");
-        var continuar = false; // Variable para controlar el bucle del menú
-        while (!continuar) { // Bucle del menú
+        var salir = false; // Variable para controlar el bucle del menú
+        while (!salir) { // Bucle del menú
             var opcion = mostrarMenu(teclado); // Mostrar el menú y obtener la opción del usuario
             switch (opcion) {
                 case 1 -> listarClientes(clienteDao); 
@@ -21,7 +21,7 @@ public class ZonaFitApp {
                 case 4 -> eliminar(teclado, clienteDao);
                 case 5 -> {
                     System.out.println("Has salido del sistema. ¡Hasta luego!");
-                    continuar = true; // Salir del bucle
+                    salir = true; // Salir del bucle
                 }
                 default -> System.out.println("\nOpción no válida\n");
             }
