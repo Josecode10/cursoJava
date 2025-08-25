@@ -16,10 +16,10 @@ public class ZonaFitApp {
             var opcion = mostrarMenu(teclado); // Mostrar el menú y obtener la opción del usuario
             switch (opcion) {
                 case 1 -> listarClientes(clienteDao); 
-                case 2 -> agregarcliente(teclado, clienteDao);
-                case 3 -> modificarCliente(teclado, clienteDao);
-                case 4 -> eliminarCliente(teclado, clienteDao);
-                case 5 -> buscarCliente(teclado, clienteDao);             
+                case 2 -> agregar(teclado, clienteDao);
+                case 3 -> modificar(teclado, clienteDao);
+                case 4 -> eliminar(teclado, clienteDao);
+                case 5 -> buscar(teclado, clienteDao);             
                 case 6 -> {
                     System.out.println("Has salido del sistema. ¡Hasta luego!");
                     continuar = true; // Salir del bucle
@@ -27,8 +27,6 @@ public class ZonaFitApp {
                 default -> System.out.println("\nOpción no válida\n");
             }
         }
-
-
     }
 
     // Mostrar el menú y devolver la opción seleccionada
@@ -60,20 +58,21 @@ public class ZonaFitApp {
         System.out.println();
     }
 
-    static void agregarcliente(Scanner teclado, IClienteDAO clienteDao) {
-        // Agregar cliente
-        var nuevoCLiente = new Cliente("Daniel", "Ortiz", 300); // Crear un objeto cliente
-        // Llamar al método agregarCliente y pasar el objeto cliente como parámetro
-        var agregado = clienteDao.agregarCliente(nuevoCLiente);
-        // Verificar si se agregó el cliente
-        if (agregado) {
-            System.out.println("Cliente agregado." + nuevoCLiente);
+    static void agregar(Scanner teclado, IClienteDAO clienteDao) {
+        Cliente nuevoCLiente = crearCliente(teclado); // Crear un nuevo cliente
+        if(nuevoCLiente.getNombre()!=null && nuevoCLiente.getApellido()!=null && nuevoCLiente.getMembresia()!=0){
+            var agregado = clienteDao.agregarCliente(nuevoCLiente); // Agregar cliente
+            if (agregado) { // Verificar si se agregó el cliente
+                System.out.println("Cliente agregado." + nuevoCLiente);
+            } else {
+                System.out.println("El cliente no se pudo agregar." + nuevoCLiente);
+            }
         } else {
-            System.out.println("El cliente no se pudo agregar." + nuevoCLiente);
+            System.out.println("Valores para crear cliente inválidos.");
         }
     }
 
-    static void modificarCliente(Scanner teclado, IClienteDAO clienteDao) {
+    static void modificar(Scanner teclado, IClienteDAO clienteDao) {
         // Modificar cliente
         // Se usa el constructor con todos los parámetros para modificar el cliente
         var modificarCliente = new Cliente(5, "Carlos Daniel", "Ortiz", 300);
@@ -85,7 +84,7 @@ public class ZonaFitApp {
         }
     }
 
-    static void eliminarCliente(Scanner teclado, IClienteDAO clienteDao) {
+    static void eliminar(Scanner teclado, IClienteDAO clienteDao) {
         // Eliminar cliente
         var eliminarCliente = new Cliente(5);
         var eliminado = clienteDao.eliminarCliente(eliminarCliente);
@@ -96,7 +95,7 @@ public class ZonaFitApp {
         }
     }
 
-    static void buscarCliente(Scanner teclado, IClienteDAO clienteDao) {
+    static void buscar(Scanner teclado, IClienteDAO clienteDao) {
         // Buscar por "id"
         var cliente1 = new Cliente(4);
         System.out.println("Cliente antes de la búsqueda: " + cliente1);
@@ -106,6 +105,27 @@ public class ZonaFitApp {
         } else {
             System.out.println("No se ha encontrado registro: " + cliente1);
         }
+    }
+    
+    static Cliente crearCliente(Scanner teclado){
+        Cliente nuevoCLiente = new Cliente();
+        try {
+            System.out.print("Ingresar nombre: ");
+            var nombre = teclado.nextLine();
+            System.out.print("Ingresar apellido: ");
+            var apellido = teclado.nextLine();
+            System.out.print("Ingresar membresia: ");
+            var membresia = Integer.parseInt(teclado.nextLine());
+            nuevoCLiente.setNombre(nombre);
+            nuevoCLiente.setApellido(apellido);
+            nuevoCLiente.setMembresia(membresia);
+            return nuevoCLiente;
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Ingresa un número válido para la membresía.");
+        } catch (Exception e) {
+            System.out.println("Error al recibir información del cliente: " + e.getMessage());
+        }
+        return nuevoCLiente;
     }
 
 }

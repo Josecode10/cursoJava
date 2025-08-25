@@ -10,8 +10,6 @@ public class Cliente {
     private String apellido;
     private int membresia;
 
-    // Constructor por defecto
-    // Se usa para crear un objeto cliente sin asignar valores a los atributos
     public Cliente() {}
 
     public Cliente(int id) {
