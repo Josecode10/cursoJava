@@ -124,8 +124,6 @@ public class ClienteDAO implements IClienteDAO {
         String sql = "UPDATE cliente SET nombre = ?, apellido = ?, membresia = ? WHERE id = ?";
         try {
             ps = con.prepareStatement(sql);
-            // Asignar los valores de los parámetros llamando a los métodos get del objeto cliente
-            // El orden de los parámetros debe coincidir con el orden de los signos de interrogación (?)
             // El id se usa en la cláusula WHERE para identificar el registro que se va a modificar
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellido());

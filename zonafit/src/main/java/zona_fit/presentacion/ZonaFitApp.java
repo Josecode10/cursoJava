@@ -19,8 +19,7 @@ public class ZonaFitApp {
                 case 2 -> agregar(teclado, clienteDao);
                 case 3 -> modificar(teclado, clienteDao);
                 case 4 -> eliminar(teclado, clienteDao);
-                case 5 -> buscar(teclado, clienteDao);             
-                case 6 -> {
+                case 5 -> {
                     System.out.println("Has salido del sistema. ¡Hasta luego!");
                     continuar = true; // Salir del bucle
                 }
@@ -38,8 +37,7 @@ public class ZonaFitApp {
                 2) Agregar cliente
                 3) Modificar cliente
                 4) Eliminar cliente
-                5) Buscar cliente
-                6) Salir
+                5) Salir
                 Escoge una opcion:\s
                 """);
         try {
@@ -59,8 +57,8 @@ public class ZonaFitApp {
     }
 
     static void agregar(Scanner teclado, IClienteDAO clienteDao) {
-        Cliente nuevoCLiente = crearCliente(teclado); // Crear un nuevo cliente
-        if(nuevoCLiente.getNombre()!=null && nuevoCLiente.getApellido()!=null && nuevoCLiente.getMembresia()!=0){
+        Cliente nuevoCLiente = crearClienteSinId(teclado); // Crear un nuevo cliente
+        if(nuevoCLiente.getNombre()!=null || nuevoCLiente.getApellido()!=null || nuevoCLiente.getMembresia()!=0){
             var agregado = clienteDao.agregarCliente(nuevoCLiente); // Agregar cliente
             if (agregado) { // Verificar si se agregó el cliente
                 System.out.println("Cliente agregado." + nuevoCLiente);
@@ -74,8 +72,7 @@ public class ZonaFitApp {
 
     static void modificar(Scanner teclado, IClienteDAO clienteDao) {
         // Modificar cliente
-        // Se usa el constructor con todos los parámetros para modificar el cliente
-        var modificarCliente = new Cliente(5, "Carlos Daniel", "Ortiz", 300);
+        Cliente modificarCliente = crearClienteConId(teclado);
         var modificado = clienteDao.modificarCliente(modificarCliente);
         if (modificado) {
             System.out.println("Cliente modificado: " + modificarCliente);
@@ -94,20 +91,8 @@ public class ZonaFitApp {
             System.out.println("No se eliminó cliente: " + eliminarCliente);
         }
     }
-
-    static void buscar(Scanner teclado, IClienteDAO clienteDao) {
-        // Buscar por "id"
-        var cliente1 = new Cliente(4);
-        System.out.println("Cliente antes de la búsqueda: " + cliente1);
-        var encontrado = clienteDao.buscarClientePorId(cliente1);
-        if (encontrado) {
-            System.out.println("Cliente encontrado: " + cliente1);
-        } else {
-            System.out.println("No se ha encontrado registro: " + cliente1);
-        }
-    }
     
-    static Cliente crearCliente(Scanner teclado){
+    static Cliente crearClienteSinId(Scanner teclado){
         Cliente nuevoCLiente = new Cliente();
         try {
             System.out.print("Ingresar nombre: ");
@@ -128,4 +113,27 @@ public class ZonaFitApp {
         return nuevoCLiente;
     }
 
+    static Cliente crearClienteConId(Scanner teclado){
+        Cliente nuevoCLiente = new Cliente();
+        try {
+            System.out.print("Ingresar ID del cliente: ");
+            var id = Integer.parseInt(teclado.nextLine());
+            System.out.print("Ingresar nombre: ");
+            var nombre = teclado.nextLine();
+            System.out.print("Ingresar apellido: ");
+            var apellido = teclado.nextLine();
+            System.out.print("Ingresar membresia: ");
+            var membresia = Integer.parseInt(teclado.nextLine());
+            nuevoCLiente.setId(id);
+            nuevoCLiente.setNombre(nombre);
+            nuevoCLiente.setApellido(apellido);
+            nuevoCLiente.setMembresia(membresia);
+            return nuevoCLiente;
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Ingresa un número válido para la membresía.");
+        } catch (Exception e) {
+            System.out.println("Error al recibir información del cliente: " + e.getMessage());
+        }
+        return nuevoCLiente;
+    }
 }
